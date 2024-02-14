@@ -1,0 +1,26 @@
+final dbBytes = await rootBundle.load('assets/buss1.jpg');
+                          var file;
+                          try {
+                            file = await writeToFile(dbBytes);
+                            print(file.path);
+                            SocialShare.shareInstagramStory (file.path, "#ffffff", "# 000000", " https: // deep-link-url ") .then ((data) {print (data);});
+                          } catch(e) {
+                            print("error in sharing");
+                          }
+
+
+
+
+
+await convertUrltoImage().then((result) async {
+                            image == null ? print("NO IMAGE FOUND"):print("IMAGE FOUND");
+                            ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+                            var file;
+                            try {
+                              file = await writeToFile(byteData);
+                              print(file.path);
+                              await SocialSharePlugin.shareToFeedFacebook(path: file.path);// <= returns File
+                            } catch(e) {
+                              print("error in converting");
+                            }
+                          });

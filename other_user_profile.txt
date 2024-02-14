@@ -1,0 +1,257 @@
+import 'package:back_button_interceptor/back_button_interceptor.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+
+import 'chat_page.dart';
+import 'const.dart';
+
+class OtherUserProfile extends StatefulWidget {
+  final String peerAvatar;
+  final String peerName;
+  final String peerAboutMe;
+  final String peerId;
+  OtherUserProfile({Key key,@required this.peerId, @required this.peerName,@required this.peerAvatar,@required this.peerAboutMe}) : super(key: key);
+  @override
+  _OtherUserProfileState createState() => new _OtherUserProfileState(peerId,peerName,peerAvatar,peerAboutMe);
+}
+class _OtherUserProfileState extends State<OtherUserProfile>{
+  String peerAboutMe;
+  String peerAvatar;
+  String peerName;
+  String peerId;
+  _OtherUserProfileState(this.peerId,this.peerName,this.peerAvatar,this.peerAboutMe);
+
+  @override
+  void initState() {
+    super.initState();
+    BackButtonInterceptor.add(myInterceptor);
+  }
+
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    print("BACK BUTTON!");
+    Navigator.of(context).pop();// Do some stuff.
+    return true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: new AppBar(
+            centerTitle: true,
+            title: new Text(
+              "コーチ詳細",
+              style: new TextStyle(color: Colors.black),)),
+        body: _myListView(context)
+    );
+  }
+
+  Widget _myListView(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        Material(
+          child: CachedNetworkImage(
+            placeholder: (context, url) => Container(
+              child: CircularProgressIndicator(
+                strokeWidth: 2.0,
+                valueColor:
+                AlwaysStoppedAnimation<Color>(
+                    themeColor),
+              ),
+              width: 170.0,
+              height: 170.0,
+            ),
+            imageUrl: peerAvatar,
+            width: double.infinity,
+            height: 300.0,
+            fit: BoxFit.cover,
+          ),
+        ),
+        SizedBox(height: 2),
+        ListTile(
+          title: Text( peerName,
+                style:TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'OpenSans',
+                ),
+          ),
+        ),
+        ListTile(
+          title: Text('歴史:',
+              style:TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
+            ),),
+          subtitle: Text('私はJavaで4年とPythonで2年以上の経験があります。また、Javaフルスタックコースを修了しました。',
+            style:TextStyle(
+              fontSize: 15,
+              color: Colors.black,
+            ),),
+        ),
+        ListTile(
+          title: Text('セッション価格:',
+            style:TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
+            ),),
+          subtitle: Container(
+            child: Column(
+            children: [
+              Card(
+                shape: BeveledRectangleBorder(
+                  side: BorderSide(
+                    color: Colors.black,
+                    width: 0.5,
+                  ),),
+                child: ListTile(
+                  title: Text(
+                    "継続セッション　(対面)",
+                  ),
+                  subtitle: Text(
+                      "¥45,000/90分",
+                      style:TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      )
+                  ),
+                ),
+              ),
+              Card(
+                shape: BeveledRectangleBorder(
+                  side: BorderSide(
+                    color: Colors.black,
+                    width: 0.5,
+                  ),),
+                child: ListTile(
+                  title: Text(
+                    "継続セッション　(オンライン)",
+                  ),
+                  subtitle: Text(
+                      "¥30,000/90分",
+                      style:TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      )
+                  ),
+                ),
+              ),
+              ],
+             )
+          ),
+        ),
+        ListTile(
+          title: Text('⊛上記の金額は目安となりますので、直接講師の方とやりとりを行ってください')
+        ),
+        ListTile(
+          title: Text('URL:',
+            style:TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
+            ),),
+          subtitle: Text('coachingplatform.jp',
+            style:TextStyle(
+              decoration: TextDecoration.underline,
+              fontSize: 20,
+              color: Colors.black,
+            ),),
+        ),
+        ListTile(
+          title: Text('提供プログラム:',
+            style:TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'OpenSans',
+            ),),
+          subtitle: Container(
+            child:Column(
+          children: [
+            Card(
+              shape: BeveledRectangleBorder(
+                side: BorderSide(
+                  color: Colors.black,
+                  width: 0.5,
+                ),),
+              child: ListTile(
+                leading:ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: 100,
+                    minHeight: 100,
+                    maxWidth: 100,
+                    maxHeight: 100,
+                  ),
+                  child: Image.asset('assets/buss2.jpg',fit:BoxFit.fill),
+                ),
+                title: Text(
+                  "ビジネス＊コーチング",
+                ),
+                subtitle:Text(
+                  "01 10 日間",
+                ),
+              ),
+            ),
+            Card(
+              shape: BeveledRectangleBorder(
+                side: BorderSide(
+                  color: Colors.black,
+                  width: 0.5,
+                ),),
+              child: ListTile(
+                leading:ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: 100,
+                    minHeight: 100,
+                    maxWidth: 100,
+                    maxHeight: 100,
+                  ),
+                  child: Image.asset('assets/buss1.jpg',fit:BoxFit.fill),
+                ),
+                title: Text(
+                  "ビジネス＊コーチング",
+                ),
+                subtitle:Text(
+                  "03 9 日間",
+                ),
+              ),
+            ),
+              ],
+             )
+          ),
+        ),
+        FlatButton(
+          child: Text('チャット',
+            style:TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+            ),),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Chat(
+                      peerId: peerId,
+                      peerAvatar: peerAvatar,
+                      peerName: peerName,
+                      peerAboutMe: peerAboutMe,
+                    )));
+          },
+          color: Colors.grey,
+          padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+          //shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        ),
+      ],
+    );
+  }
+
+}

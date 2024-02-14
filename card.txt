@@ -1,0 +1,44 @@
+Card(
+                    shape: BeveledRectangleBorder(
+                      side: BorderSide(
+                        color: Colors.black,
+                        width: 0.5,
+                      ),),
+                        child: Padding(
+                        padding: const EdgeInsets.all(25),
+                           child:ListTile(
+                             leading:ConstrainedBox(
+                               constraints: BoxConstraints(
+                                 minWidth: 100,
+                                 minHeight: 300,
+                                 maxWidth: 100,
+                                 maxHeight: 300,
+                               ),
+                               child: Image.asset('assets/buss1.jpg',fit:BoxFit.cover),
+                             ),
+                             title: Text(
+                               "ビジネス＊コーチング 01",
+                             ),
+                             subtitle:Text(
+                               "10 日間",
+                             ),
+                           ),
+                            )
+                  ),
+
+
+
+ Container(
+                      child: Row(
+                        children: [
+                          Container(
+                              decoration: new BoxDecoration(
+                                  image: new DecorationImage(
+                                    image: new AssetImage("assets/buss2.jpg"),
+                                    fit: BoxFit.fill,
+                                  )
+                              )
+                          )
+                        ],
+                      )
+                  )

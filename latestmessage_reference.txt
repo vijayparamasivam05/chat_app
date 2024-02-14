@@ -1,0 +1,9 @@
+var userReference = FirebaseFirestore.instance.collection('users').doc(id);
+      FirebaseFirestore.instance.runTransaction((transaction) async{
+        transaction.update(
+          userReference,
+          {
+            'latestMessage': content
+          },
+        );
+      });

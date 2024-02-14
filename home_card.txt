@@ -1,0 +1,387 @@
+import 'package:back_button_interceptor/back_button_interceptor.dart';
+import 'package:chat_app/profile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'first_screen.dart';
+
+class MyHomePage extends StatefulWidget {
+  final String userId;
+  final String title;
+
+  MyHomePage({Key key, @required this.userId,@required this.title}) : super(key: key);
+  @override
+  MyHomePageState createState() => new MyHomePageState(userId,title);
+}
+class MyHomePageState extends State<MyHomePage> {
+  final String userId;
+  final String title;
+  MyHomePageState(this.userId,this.title);
+
+  @override
+  void initState() {
+    super.initState();
+    BackButtonInterceptor.add(myInterceptor);
+  }
+
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    print("BACK BUTTON!");
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) {
+          return FirstScreen(userId: userId,);
+        },
+      ),
+    );// Do some stuff.
+    return true;
+  }
+
+  void handleClick(String value){
+    switch (value) {
+      case 'プロフィル':
+        {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return MyProfilePage(userId: userId,title:title);
+              },
+            ),
+          );
+        }
+        break;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.grey[300],
+        appBar: new AppBar(
+          centerTitle: true,
+          title: new Text(
+            title,
+            style: new TextStyle(color: Colors.black),),
+          actions: <Widget>[
+            PopupMenuButton<String>(
+              onSelected: handleClick,
+              itemBuilder: (BuildContext context) {
+                return {'プロフィル'}.map((String choice) {
+                  return PopupMenuItem<String>(
+                    value: choice,
+                    child: Text(choice),
+                  );
+                }).toList();
+              },
+            ),
+          ],),
+        body: buildItem(context));
+  }
+
+  Widget buildItem(BuildContext context)
+  {
+    return ListView(
+      children: <Widget>[
+        ListTile(
+          title: Card(
+              shape: BeveledRectangleBorder(
+                side: BorderSide(
+                  color: Colors.grey,
+                  width: 0.5,
+                ),),
+              child: InkWell(
+                onTap: () => {},
+                child: Container(
+                  color: Colors.grey,
+                  padding: EdgeInsets.only(left: 16, top:35,right: 16, bottom: 35),
+                  child: Center(
+                    child:Text("キャンペーン。お知らせ",
+                        style:TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white
+                        )
+                    ),
+                  )
+                )
+              )),
+          subtitle: Container(
+              child:Column(
+                children: [
+                  Card(
+                      shape: BeveledRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.grey,
+                          width: 0.5,
+                        ),),
+                      child: InkWell(
+                        onTap: () => {},
+                        child: Row(
+                          children: [
+                            Container(
+                                width: 100.00,
+                                height: 100.00,
+                                decoration: new BoxDecoration(
+                                  image: new DecorationImage(
+                                    image: ExactAssetImage('assets/buss1.jpg'),
+                                    fit: BoxFit.fitHeight,
+                                  ),
+                                )),
+                            SizedBox(width: 10),
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      "ビジネス＊コーチング",
+                                      style:TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18,
+                                      )
+                                  ),
+                                  Text(
+                                      "7日間",
+                                      style:TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                      )
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      )),
+                  Card(
+                      shape: BeveledRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.grey,
+                          width: 0.5,
+                        ),),
+                      child: InkWell(
+                        onTap: () => {},
+                        child: Row(
+                          children: [
+                            Container(
+                                width: 100.00,
+                                height: 100.00,
+                                decoration: new BoxDecoration(
+                                  image: new DecorationImage(
+                                    image: ExactAssetImage('assets/buss2.jpg'),
+                                    fit: BoxFit.fitHeight,
+                                  ),
+                                )),
+                            SizedBox(width: 10),
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      "ライフスタイルトレニング",
+                                      style:TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18,
+                                      )
+                                  ),
+                                  Text(
+                                      "10日間",
+                                      style:TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                      )
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      )),
+                  Card(
+                      shape: BeveledRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.grey,
+                          width: 0.5,
+                        ),),
+                      child: InkWell(
+                        onTap: () => {},
+                        child: Row(
+                          children: [
+                            Container(
+                                width: 100.00,
+                                height: 100.00,
+                                decoration: new BoxDecoration(
+                                  image: new DecorationImage(
+                                    image: ExactAssetImage('assets/buss5.jpg'),
+                                    fit: BoxFit.fitHeight,
+                                  ),
+                                )),
+                            SizedBox(width: 10),
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      "ビジネス＊スキルアップ",
+                                      style:TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18,
+                                      )
+                                  ),
+                                  Text(
+                                      "7日間",
+                                      style:TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                      )
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      )),
+                  Card(
+                      shape: BeveledRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.grey,
+                          width: 0.5,
+                        ),),
+                      child: InkWell(
+                        onTap: () => {},
+                        child: Row(
+                          children: [
+                            Container(
+                                width: 100.00,
+                                height: 100.00,
+                                decoration: new BoxDecoration(
+                                  image: new DecorationImage(
+                                    image: ExactAssetImage('assets/buss4.jpg'),
+                                    fit: BoxFit.fitHeight,
+                                  ),
+                                )),
+                            SizedBox(width: 10),
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      "ライフスタイル＊コーチング",
+                                      style:TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18,
+                                      )
+                                  ),
+                                  Text(
+                                      "7日間",
+                                      style:TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                      )
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      )),
+                  Card(
+                      shape: BeveledRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.grey,
+                          width: 0.5,
+                        ),),
+                      child: InkWell(
+                        onTap: () => {},
+                        child: Row(
+                          children: [
+                            Container(
+                                width: 100.00,
+                                height: 100.00,
+                                decoration: new BoxDecoration(
+                                  image: new DecorationImage(
+                                    image: ExactAssetImage('assets/buss1.jpg'),
+                                    fit: BoxFit.fitHeight,
+                                  ),
+                                )),
+                            SizedBox(width: 10),
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      "ライフスタイル 02",
+                                      style:TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18,
+                                      )
+                                  ),
+                                  Text(
+                                      "20日間",
+                                      style:TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                      )
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      )),
+                  Card(
+                      shape: BeveledRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.grey,
+                          width: 0.5,
+                        ),),
+                      child: InkWell(
+                        onTap: () => {},
+                        child: Row(
+                          children: [
+                            Container(
+                                width: 100.00,
+                                height: 100.00,
+                                decoration: new BoxDecoration(
+                                  image: new DecorationImage(
+                                    image: ExactAssetImage('assets/buss6.jpg'),
+                                    fit: BoxFit.fitHeight,
+                                  ),
+                                )),
+                            SizedBox(width: 10),
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      "ビジネス＊コーチング 04",
+                                      style:TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18,
+                                      )
+                                  ),
+                                  Text(
+                                      "12日間",
+                                      style:TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                      )
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      )),
+                ],
+              )
+          ),
+        ),
+      ],
+    );
+  }
+}

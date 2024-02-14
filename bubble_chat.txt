@@ -1,0 +1,17 @@
+    double pixelRatio = MediaQuery.of(context).devicePixelRatio;
+    double px = 1 / pixelRatio;
+
+    BubbleStyle styleSomebody = BubbleStyle(
+      //nip: BubbleNip.leftTop,
+      color: greyColor2,
+      //elevation: 1 * px,
+      //margin: BubbleEdges.only(top: 3.0, right: 50.0),
+      //alignment: Alignment.topLeft,
+    );
+    BubbleStyle styleMe = BubbleStyle(
+      //nip: BubbleNip.rightTop,
+      color: greyColor,
+      // elevation: 1 * px,
+      //margin: BubbleEdges.only(top: 3.0, left: 50.0),
+      //alignment: Alignment.topRight,
+    );
